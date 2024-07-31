@@ -1,0 +1,244 @@
+ARM GAS  /tmp/ccI6OELx.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 2
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"main.c"
+  16              		.text
+  17              		.section	.rodata.main.str1.4,"aMS",%progbits,1
+  18              		.align	2
+  19              	.LC0:
+  20 0000 0D00     		.ascii	"\015\000"
+  21 0002 0000     		.align	2
+  22              	.LC1:
+  23 0004 41435355 		.ascii	"ACSU     : OK.\015\012\000"
+  23      20202020 
+  23      203A204F 
+  23      4B2E0D0A 
+  23      00
+  24 0015 000000   		.align	2
+  25              	.LC2:
+  26 0018 52544320 		.ascii	"RTC      : OK.\015\012\000"
+  26      20202020 
+  26      203A204F 
+  26      4B2E0D0A 
+  26      00
+  27 0029 000000   		.align	2
+  28              	.LC3:
+  29 002c 4C454420 		.ascii	"LED      : OK.\015\012\000"
+  29      20202020 
+  29      203A204F 
+  29      4B2E0D0A 
+  29      00
+  30 003d 000000   		.align	2
+  31              	.LC4:
+  32 0040 434F4D50 		.ascii	"COMPORT  : OK.\015\012\000"
+  32      4F525420 
+  32      203A204F 
+  32      4B2E0D0A 
+  32      00
+  33 0051 000000   		.align	2
+  34              	.LC5:
+  35 0054 54494D32 		.ascii	"TIM2     : OK.\015\012\000"
+  35      20202020 
+  35      203A204F 
+  35      4B2E0D0A 
+  35      00
+  36 0065 000000   		.align	2
+  37              	.LC6:
+ARM GAS  /tmp/ccI6OELx.s 			page 2
+
+
+  38 0068 53504931 		.ascii	"SPI1     : OK.\015\012\000"
+  38      20202020 
+  38      203A204F 
+  38      4B2E0D0A 
+  38      00
+  39 0079 000000   		.align	2
+  40              	.LC7:
+  41 007c 1B6300   		.ascii	"\033c\000"
+  42 007f 00       		.align	2
+  43              	.LC8:
+  44 0080 0D0A00   		.ascii	"\015\012\000"
+  45              		.section	.text.startup.main,"ax",%progbits
+  46              		.align	1
+  47              		.p2align 2,,3
+  48              		.global	main
+  49              		.syntax unified
+  50              		.thumb
+  51              		.thumb_func
+  53              	main:
+  54              		@ args = 0, pretend = 0, frame = 64
+  55              		@ frame_needed = 0, uses_anonymous_args = 0
+  56 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  57 0004 B420     		movs	r0, #180
+  58 0006 90B0     		sub	sp, sp, #64
+  59 0008 FFF7FEFF 		bl	ACSU_Init
+  60 000c FFF7FEFF 		bl	RTC_Init
+  61 0010 FFF7FEFF 		bl	LED_Init
+  62 0014 4FF4E130 		mov	r0, #115200
+  63 0018 FFF7FEFF 		bl	CP_Init
+  64 001c 294C     		ldr	r4, .L12
+  65 001e 0726     		movs	r6, #7
+  66              	.L2:
+  67 0020 2046     		mov	r0, r4
+  68 0022 FFF7FEFF 		bl	puts
+  69 0026 013E     		subs	r6, r6, #1
+  70 0028 FAD1     		bne	.L2
+  71 002a 2748     		ldr	r0, .L12+4
+  72 002c 274C     		ldr	r4, .L12+8
+  73 002e 284D     		ldr	r5, .L12+12
+  74 0030 DFF8B880 		ldr	r8, .L12+40
+  75 0034 FFF7FEFF 		bl	nucleo_printf
+  76 0038 2648     		ldr	r0, .L12+16
+  77 003a FFF7FEFF 		bl	nucleo_printf
+  78 003e 2648     		ldr	r0, .L12+20
+  79 0040 FFF7FEFF 		bl	nucleo_printf
+  80 0044 2548     		ldr	r0, .L12+24
+  81 0046 FFF7FEFF 		bl	nucleo_printf
+  82 004a 0123     		movs	r3, #1
+  83 004c 42F22732 		movw	r2, #8999
+  84 0050 0227     		movs	r7, #2
+  85 0052 CDE90736 		strd	r3, r6, [sp, #28]
+  86 0056 02A8     		add	r0, sp, #8
+  87 0058 0693     		str	r3, [sp, #24]	@ unaligned
+  88 005a 42F20F73 		movw	r3, #9999
+  89 005e 0492     		str	r2, [sp, #16]	@ unaligned
+  90 0060 0593     		str	r3, [sp, #20]	@ unaligned
+  91 0062 0397     		str	r7, [sp, #12]	@ unaligned
+ARM GAS  /tmp/ccI6OELx.s 			page 3
+
+
+  92 0064 0296     		str	r6, [sp, #8]
+  93 0066 FFF7FEFF 		bl	TIM_Init
+  94 006a 1D48     		ldr	r0, .L12+28
+  95 006c FFF7FEFF 		bl	nucleo_printf
+  96 0070 09A8     		add	r0, sp, #36
+  97 0072 CDE90967 		strd	r6, r7, [sp, #36]
+  98 0076 CDE90B66 		strd	r6, r6, [sp, #44]
+  99 007a CDE90D66 		strd	r6, r6, [sp, #52]
+ 100 007e 0F96     		str	r6, [sp, #60]
+ 101 0080 FFF7FEFF 		bl	SPI_Init
+ 102 0084 1748     		ldr	r0, .L12+32
+ 103 0086 184F     		ldr	r7, .L12+36
+ 104 0088 FFF7FEFF 		bl	nucleo_printf
+ 105              	.L3:
+ 106 008c 2368     		ldr	r3, [r4]
+ 107 008e 002B     		cmp	r3, #0
+ 108 0090 FCD0     		beq	.L3
+ 109 0092 2B68     		ldr	r3, [r5]
+ 110 0094 DB07     		lsls	r3, r3, #31
+ 111 0096 12D5     		bpl	.L4
+ 112 0098 FFF7FEFF 		bl	LED_ON
+ 113              	.L5:
+ 114 009c 2B68     		ldr	r3, [r5]
+ 115 009e 6846     		mov	r0, sp
+ 116 00a0 0133     		adds	r3, r3, #1
+ 117 00a2 2B60     		str	r3, [r5]
+ 118 00a4 FFF7FEFF 		bl	RTC_GetBCD
+ 119 00a8 4046     		mov	r0, r8
+ 120 00aa FFF7FEFF 		bl	nucleo_printf
+ 121 00ae 6846     		mov	r0, sp
+ 122 00b0 FFF7FEFF 		bl	nucleo_printf
+ 123 00b4 3846     		mov	r0, r7
+ 124 00b6 FFF7FEFF 		bl	nucleo_printf
+ 125 00ba 2660     		str	r6, [r4]
+ 126 00bc E6E7     		b	.L3
+ 127              	.L4:
+ 128 00be FFF7FEFF 		bl	LED_OFF
+ 129 00c2 EBE7     		b	.L5
+ 130              	.L13:
+ 131              		.align	2
+ 132              	.L12:
+ 133 00c4 00000000 		.word	.LC0
+ 134 00c8 04000000 		.word	.LC1
+ 135 00cc 00000000 		.word	tim2_flag
+ 136 00d0 00000000 		.word	i.0
+ 137 00d4 18000000 		.word	.LC2
+ 138 00d8 2C000000 		.word	.LC3
+ 139 00dc 40000000 		.word	.LC4
+ 140 00e0 54000000 		.word	.LC5
+ 141 00e4 68000000 		.word	.LC6
+ 142 00e8 80000000 		.word	.LC8
+ 143 00ec 7C000000 		.word	.LC7
+ 145              		.section	.text.TIM2_IRQHandler,"ax",%progbits
+ 146              		.align	1
+ 147              		.p2align 2,,3
+ 148              		.global	TIM2_IRQHandler
+ 149              		.syntax unified
+ARM GAS  /tmp/ccI6OELx.s 			page 4
+
+
+ 150              		.thumb
+ 151              		.thumb_func
+ 153              	TIM2_IRQHandler:
+ 154              		@ args = 0, pretend = 0, frame = 0
+ 155              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156              		@ link register save eliminated.
+ 157 0000 4FF08043 		mov	r3, #1073741824
+ 158 0004 1A69     		ldr	r2, [r3, #16]
+ 159 0006 D207     		lsls	r2, r2, #31
+ 160 0008 06D5     		bpl	.L14
+ 161 000a 1A69     		ldr	r2, [r3, #16]
+ 162 000c 0349     		ldr	r1, .L19
+ 163 000e 22F00102 		bic	r2, r2, #1
+ 164 0012 0120     		movs	r0, #1
+ 165 0014 1A61     		str	r2, [r3, #16]
+ 166 0016 0860     		str	r0, [r1]
+ 167              	.L14:
+ 168 0018 7047     		bx	lr
+ 169              	.L20:
+ 170 001a 00BF     		.align	2
+ 171              	.L19:
+ 172 001c 00000000 		.word	tim2_flag
+ 174              		.section	.bss.i.0,"aw",%nobits
+ 175              		.align	2
+ 178              	i.0:
+ 179 0000 00000000 		.space	4
+ 180              		.global	tim2_flag
+ 181              		.section	.bss.tim2_flag,"aw",%nobits
+ 182              		.align	2
+ 185              	tim2_flag:
+ 186 0000 00000000 		.space	4
+ 187              		.ident	"GCC: (15:12.2.rel1-1) 12.2.1 20221205"
+ARM GAS  /tmp/ccI6OELx.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+     /tmp/ccI6OELx.s:18     .rodata.main.str1.4:00000000 $d
+     /tmp/ccI6OELx.s:46     .text.startup.main:00000000 $t
+     /tmp/ccI6OELx.s:53     .text.startup.main:00000000 main
+     /tmp/ccI6OELx.s:133    .text.startup.main:000000c4 $d
+     /tmp/ccI6OELx.s:185    .bss.tim2_flag:00000000 tim2_flag
+     /tmp/ccI6OELx.s:178    .bss.i.0:00000000 i.0
+     /tmp/ccI6OELx.s:146    .text.TIM2_IRQHandler:00000000 $t
+     /tmp/ccI6OELx.s:153    .text.TIM2_IRQHandler:00000000 TIM2_IRQHandler
+     /tmp/ccI6OELx.s:172    .text.TIM2_IRQHandler:0000001c $d
+     /tmp/ccI6OELx.s:175    .bss.i.0:00000000 $d
+     /tmp/ccI6OELx.s:182    .bss.tim2_flag:00000000 $d
+
+UNDEFINED SYMBOLS
+ACSU_Init
+RTC_Init
+LED_Init
+CP_Init
+puts
+nucleo_printf
+TIM_Init
+SPI_Init
+LED_ON
+RTC_GetBCD
+LED_OFF

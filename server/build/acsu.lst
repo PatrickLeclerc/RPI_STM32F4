@@ -1,0 +1,103 @@
+ARM GAS  /tmp/ccXBkK9u.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 2
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"acsu.c"
+  16              		.text
+  17              		.section	.text.ACSU_Init,"ax",%progbits
+  18              		.align	1
+  19              		.p2align 2,,3
+  20              		.global	ACSU_Init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	ACSU_Init:
+  26              		@ args = 0, pretend = 0, frame = 0
+  27              		@ frame_needed = 0, uses_anonymous_args = 0
+  28              		@ link register save eliminated.
+  29 0000 214B     		ldr	r3, .L10
+  30 0002 9A68     		ldr	r2, [r3, #8]
+  31 0004 42F4A052 		orr	r2, r2, #5120
+  32 0008 10B4     		push	{r4}
+  33 000a 9A60     		str	r2, [r3, #8]
+  34 000c 9A68     		ldr	r2, [r3, #8]
+  35 000e 42F40042 		orr	r2, r2, #32768
+  36 0012 9A60     		str	r2, [r3, #8]
+  37 0014 1A68     		ldr	r2, [r3]
+  38 0016 22F4A022 		bic	r2, r2, #327680
+  39 001a 42F48032 		orr	r2, r2, #65536
+  40 001e 1A60     		str	r2, [r3]
+  41              	.L2:
+  42 0020 1A68     		ldr	r2, [r3]
+  43 0022 9203     		lsls	r2, r2, #14
+  44 0024 FCD5     		bpl	.L2
+  45 0026 5A68     		ldr	r2, [r3, #4]
+  46 0028 184C     		ldr	r4, .L10+4
+  47 002a 42F48002 		orr	r2, r2, #4194304
+  48 002e 5A60     		str	r2, [r3, #4]
+  49 0030 5A68     		ldr	r2, [r3, #4]
+  50 0032 22F03F02 		bic	r2, r2, #63
+  51 0036 5A60     		str	r2, [r3, #4]
+  52 0038 5A68     		ldr	r2, [r3, #4]
+  53 003a 42F00402 		orr	r2, r2, #4
+  54 003e 5A60     		str	r2, [r3, #4]
+  55 0040 5A68     		ldr	r2, [r3, #4]
+  56 0042 22F4FF42 		bic	r2, r2, #32640
+  57 0046 22F04002 		bic	r2, r2, #64
+  58 004a 5A60     		str	r2, [r3, #4]
+ARM GAS  /tmp/ccXBkK9u.s 			page 2
+
+
+  59 004c 5A68     		ldr	r2, [r3, #4]
+  60 004e 42EA8010 		orr	r0, r2, r0, lsl #6
+  61 0052 5860     		str	r0, [r3, #4]
+  62 0054 5968     		ldr	r1, [r3, #4]
+  63 0056 0C4A     		ldr	r2, .L10
+  64 0058 21F44031 		bic	r1, r1, #196608
+  65 005c 5960     		str	r1, [r3, #4]
+  66 005e 2168     		ldr	r1, [r4]
+  67 0060 41F48271 		orr	r1, r1, #260
+  68 0064 41F00101 		orr	r1, r1, #1
+  69 0068 2160     		str	r1, [r4]
+  70 006a 1968     		ldr	r1, [r3]
+  71 006c 41F08071 		orr	r1, r1, #16777216
+  72 0070 1960     		str	r1, [r3]
+  73              	.L3:
+  74 0072 1368     		ldr	r3, [r2]
+  75 0074 9B01     		lsls	r3, r3, #6
+  76 0076 FCD5     		bpl	.L3
+  77 0078 9368     		ldr	r3, [r2, #8]
+  78 007a 5DF8044B 		ldr	r4, [sp], #4
+  79 007e 43F00203 		orr	r3, r3, #2
+  80 0082 9360     		str	r3, [r2, #8]
+  81 0084 FFF7FEBF 		b	SystemCoreClockUpdate
+  82              	.L11:
+  83              		.align	2
+  84              	.L10:
+  85 0088 00380240 		.word	1073887232
+  86 008c 003C0240 		.word	1073888256
+  88              		.ident	"GCC: (15:12.2.rel1-1) 12.2.1 20221205"
+ARM GAS  /tmp/ccXBkK9u.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 acsu.c
+     /tmp/ccXBkK9u.s:18     .text.ACSU_Init:00000000 $t
+     /tmp/ccXBkK9u.s:25     .text.ACSU_Init:00000000 ACSU_Init
+     /tmp/ccXBkK9u.s:85     .text.ACSU_Init:00000088 $d
+
+UNDEFINED SYMBOLS
+SystemCoreClockUpdate

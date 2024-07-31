@@ -1,0 +1,198 @@
+ARM GAS  /tmp/cckygVoy.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 2
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"tim.c"
+  16              		.text
+  17              		.section	.text.TIM_Init,"ax",%progbits
+  18              		.align	1
+  19              		.p2align 2,,3
+  20              		.global	TIM_Init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	TIM_Init:
+  26              		@ args = 0, pretend = 0, frame = 0
+  27              		@ frame_needed = 0, uses_anonymous_args = 0
+  28              		@ link register save eliminated.
+  29 0000 30B4     		push	{r4, r5}
+  30 0002 4368     		ldr	r3, [r0, #4]	@ unaligned
+  31 0004 013B     		subs	r3, r3, #1
+  32 0006 072B     		cmp	r3, #7
+  33 0008 41D8     		bhi	.L1
+  34 000a DFE803F0 		tbb	[pc, r3]
+  35              	.L4:
+  36 000e 42       		.byte	(.L11-.L4)/2
+  37 000f 4C       		.byte	(.L10-.L4)/2
+  38 0010 57       		.byte	(.L9-.L4)/2
+  39 0011 61       		.byte	(.L8-.L4)/2
+  40 0012 6B       		.byte	(.L7-.L4)/2
+  41 0013 75       		.byte	(.L6-.L4)/2
+  42 0014 7F       		.byte	(.L5-.L4)/2
+  43 0015 04       		.byte	(.L3-.L4)/2
+  44              		.p2align 1
+  45              	.L3:
+  46 0016 4249     		ldr	r1, .L24
+  47 0018 424B     		ldr	r3, .L24+4
+  48 001a 4A6C     		ldr	r2, [r1, #68]
+  49 001c 42F00202 		orr	r2, r2, #2
+  50 0020 4A64     		str	r2, [r1, #68]
+  51 0022 4FF48054 		mov	r4, #4096
+  52 0026 0121     		movs	r1, #1
+  53              	.L12:
+  54 0028 8022     		movs	r2, #128
+  55 002a 0360     		str	r3, [r0]	@ unaligned
+  56 002c 1A60     		str	r2, [r3]
+  57 002e 0269     		ldr	r2, [r0, #16]	@ unaligned
+  58 0030 1AB1     		cbz	r2, .L13
+ARM GAS  /tmp/cckygVoy.s 			page 2
+
+
+  59 0032 1A68     		ldr	r2, [r3]
+  60 0034 42F00402 		orr	r2, r2, #4
+  61 0038 1A60     		str	r2, [r3]
+  62              	.L13:
+  63 003a 8268     		ldr	r2, [r0, #8]	@ unaligned
+  64 003c 9A62     		str	r2, [r3, #40]
+  65 003e C268     		ldr	r2, [r0, #12]	@ unaligned
+  66 0040 DA62     		str	r2, [r3, #44]
+  67 0042 0022     		movs	r2, #0
+  68 0044 5A62     		str	r2, [r3, #36]
+  69 0046 427E     		ldrb	r2, [r0, #25]	@ zero_extendqisi2
+  70 0048 90F818C0 		ldrb	ip, [r0, #24]	@ zero_extendqisi2
+  71 004c 1D68     		ldr	r5, [r3]
+  72 004e D200     		lsls	r2, r2, #3
+  73 0050 42EA0C12 		orr	r2, r2, ip, lsl #4
+  74 0054 2A43     		orrs	r2, r2, r5
+  75 0056 1A60     		str	r2, [r3]
+  76 0058 90F81AC0 		ldrb	ip, [r0, #26]	@ zero_extendqisi2
+  77 005c C27E     		ldrb	r2, [r0, #27]	@ zero_extendqisi2
+  78 005e 9D68     		ldr	r5, [r3, #8]
+  79 0060 42EA0C12 		orr	r2, r2, ip, lsl #4
+  80 0064 2A43     		orrs	r2, r2, r5
+  81 0066 9A60     		str	r2, [r3, #8]
+  82 0068 4269     		ldr	r2, [r0, #20]	@ unaligned
+  83 006a 42B1     		cbz	r2, .L14
+  84 006c DA68     		ldr	r2, [r3, #12]
+  85 006e 2E48     		ldr	r0, .L24+8
+  86 0070 42F48072 		orr	r2, r2, #256
+  87 0074 42F00102 		orr	r2, r2, #1
+  88 0078 DA60     		str	r2, [r3, #12]
+  89 007a 40F82140 		str	r4, [r0, r1, lsl #2]
+  90              	.L14:
+  91 007e 5A69     		ldr	r2, [r3, #20]
+  92 0080 42F00102 		orr	r2, r2, #1
+  93 0084 5A61     		str	r2, [r3, #20]
+  94 0086 1A68     		ldr	r2, [r3]
+  95 0088 42F00102 		orr	r2, r2, #1
+  96 008c 1A60     		str	r2, [r3]
+  97              	.L1:
+  98 008e 30BC     		pop	{r4, r5}
+  99 0090 7047     		bx	lr
+ 100              	.L11:
+ 101 0092 2349     		ldr	r1, .L24
+ 102 0094 254B     		ldr	r3, .L24+12
+ 103 0096 4A6C     		ldr	r2, [r1, #68]
+ 104 0098 42F00102 		orr	r2, r2, #1
+ 105 009c 4A64     		str	r2, [r1, #68]
+ 106 009e 4FF00074 		mov	r4, #33554432
+ 107 00a2 0021     		movs	r1, #0
+ 108 00a4 C0E7     		b	.L12
+ 109              	.L10:
+ 110 00a6 1E4A     		ldr	r2, .L24
+ 111 00a8 136C     		ldr	r3, [r2, #64]
+ 112 00aa 43F00103 		orr	r3, r3, #1
+ 113 00ae 1364     		str	r3, [r2, #64]
+ 114 00b0 4FF08054 		mov	r4, #268435456
+ 115 00b4 0021     		movs	r1, #0
+ARM GAS  /tmp/cckygVoy.s 			page 3
+
+
+ 116 00b6 4FF08043 		mov	r3, #1073741824
+ 117 00ba B5E7     		b	.L12
+ 118              	.L9:
+ 119 00bc 1849     		ldr	r1, .L24
+ 120 00be 1C4B     		ldr	r3, .L24+16
+ 121 00c0 0A6C     		ldr	r2, [r1, #64]
+ 122 00c2 42F00202 		orr	r2, r2, #2
+ 123 00c6 0A64     		str	r2, [r1, #64]
+ 124 00c8 4FF00054 		mov	r4, #536870912
+ 125 00cc 0021     		movs	r1, #0
+ 126 00ce ABE7     		b	.L12
+ 127              	.L8:
+ 128 00d0 1349     		ldr	r1, .L24
+ 129 00d2 184B     		ldr	r3, .L24+20
+ 130 00d4 0A6C     		ldr	r2, [r1, #64]
+ 131 00d6 42F00402 		orr	r2, r2, #4
+ 132 00da 0A64     		str	r2, [r1, #64]
+ 133 00dc 4FF08044 		mov	r4, #1073741824
+ 134 00e0 0021     		movs	r1, #0
+ 135 00e2 A1E7     		b	.L12
+ 136              	.L7:
+ 137 00e4 0E49     		ldr	r1, .L24
+ 138 00e6 144B     		ldr	r3, .L24+24
+ 139 00e8 0A6C     		ldr	r2, [r1, #64]
+ 140 00ea 42F00802 		orr	r2, r2, #8
+ 141 00ee 0A64     		str	r2, [r1, #64]
+ 142 00f0 4FF48024 		mov	r4, #262144
+ 143 00f4 0121     		movs	r1, #1
+ 144 00f6 97E7     		b	.L12
+ 145              	.L6:
+ 146 00f8 0949     		ldr	r1, .L24
+ 147 00fa 104B     		ldr	r3, .L24+28
+ 148 00fc 0A6C     		ldr	r2, [r1, #64]
+ 149 00fe 42F01002 		orr	r2, r2, #16
+ 150 0102 0A64     		str	r2, [r1, #64]
+ 151 0104 4FF48004 		mov	r4, #4194304
+ 152 0108 0121     		movs	r1, #1
+ 153 010a 8DE7     		b	.L12
+ 154              	.L5:
+ 155 010c 0449     		ldr	r1, .L24
+ 156 010e 0C4B     		ldr	r3, .L24+32
+ 157 0110 0A6C     		ldr	r2, [r1, #64]
+ 158 0112 42F02002 		orr	r2, r2, #32
+ 159 0116 0A64     		str	r2, [r1, #64]
+ 160 0118 4FF40004 		mov	r4, #8388608
+ 161 011c 0121     		movs	r1, #1
+ 162 011e 83E7     		b	.L12
+ 163              	.L25:
+ 164              		.align	2
+ 165              	.L24:
+ 166 0120 00380240 		.word	1073887232
+ 167 0124 00040140 		.word	1073808384
+ 168 0128 00E100E0 		.word	-536813312
+ 169 012c 00000140 		.word	1073807360
+ 170 0130 00040040 		.word	1073742848
+ 171 0134 00080040 		.word	1073743872
+ 172 0138 000C0040 		.word	1073744896
+ARM GAS  /tmp/cckygVoy.s 			page 4
+
+
+ 173 013c 00100040 		.word	1073745920
+ 174 0140 00140040 		.word	1073746944
+ 176              		.ident	"GCC: (15:12.2.rel1-1) 12.2.1 20221205"
+ARM GAS  /tmp/cckygVoy.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tim.c
+     /tmp/cckygVoy.s:18     .text.TIM_Init:00000000 $t
+     /tmp/cckygVoy.s:25     .text.TIM_Init:00000000 TIM_Init
+     /tmp/cckygVoy.s:36     .text.TIM_Init:0000000e $d
+     /tmp/cckygVoy.s:44     .text.TIM_Init:00000016 $t
+     /tmp/cckygVoy.s:166    .text.TIM_Init:00000120 $d
+
+NO UNDEFINED SYMBOLS
