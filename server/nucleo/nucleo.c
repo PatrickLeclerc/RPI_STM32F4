@@ -3,17 +3,22 @@
 #include <stdio.h>
 #include "nucleo.h"
 
+volatile uint8_t spirx[SPI_RX_BUFF_SIZE*2] = {};
+volatile uint8_t* spirx_ptr;
+volatile uint8_t spirx_flag;
 //COMPORT
 void CP_Init(uint32_t brr){
 	USART_t usart2 = {
 		.br = brr,
 		.n = 2,
+		.rxe = 0,
+		.txe = 1,
 		.rxie = 0,
 		.txie = 0,
 		.dmaRxE = 0,
 		.dmaTxE = 1};
 	GPIO_t usart2_gpio = {
-		.pins = 0x4U,//0xCU for rx/tx
+		.pins = 0xC & 0x4U,//RX: 0x4, TX: 0x8 
 		.mode = GPIO_MODE_AF,
 		.af = 7,
 		.port = 'A'};
@@ -88,3 +93,54 @@ void LED_Init(){
 	LED_OFF();}
 
 
+
+//SPI
+void DMA1_Stream3_IRQHandler(){
+	if(DMA1->LISR & DMA_LISR_HTIF3){
+		DMA1->LIFCR = DMA_LIFCR_CHTIF3;
+		spirx_ptr = &spirx[0];
+	}
+	if(DMA1->LISR & DMA_LISR_TCIF3){
+		DMA1->LIFCR = DMA_LIFCR_CTCIF3;
+		spirx_ptr = &spirx[SPI_RX_BUFF_SIZE/2];
+	}}
+void nucleo_spi_init(){
+	SPI_t spi2 = {
+		.regs = 0,
+		.n = 2,
+		.br = SPI_BR_FPDIV4, // 180/2 /2 (APB1) / FPDIV => 11.25MHz
+		.rxe = 1,
+		.txe = 0,
+		.rxie = 0,
+		.txie = 0,
+		.dmaRxE = 0,
+		.dmaTxE = 0
+	};
+	GPIO_t spi2_gpio = {
+		.pins = 0x1 | 0x2 | 0x7, //MOSI | MISO | SCK
+		.mode = GPIO_MODE_AF,
+		.af = 5,
+		.port = 'C'};
+	DMA_t spi2_dmaRX ={
+		.n			= 1,
+		.stream		= 3,//TX => .stream = 4,
+		.ch			= 0,//TX => .ch		= 0,
+		.m0ar		= spirx,
+		.m1ar		= 0,
+		.par		= (uint32_t)&(SPI2->DR),
+		.ndtr		= (SPI_RX_BUFF_SIZE*2),
+		.pl			= DMA_PL_HIGH,
+		.msize		= DMA_SIZE_B,
+		.psize		= DMA_SIZE_B,
+		.minc		= 1,
+		.pinc		= 0,
+		.dbm		= 0,
+		.circ		= 1,
+		.dir		= DMA_DIR_P2M,
+		.tcie		= 1,
+		.htie		= 1,
+		.en			= 1};
+
+		GPIO_Init(&spi2_gpio);
+		DMA_Init(&spi2_dmaRX);
+		SPI_Init(&spi2);}

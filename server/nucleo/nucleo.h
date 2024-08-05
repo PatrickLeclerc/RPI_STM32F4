@@ -1,9 +1,15 @@
+#include "acsu.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 #include "dma.h"
 #include "rtc.h"
+
 #include "spi.h"
+#define SPI_RX_BUFF_SIZE 512
+extern volatile uint8_t spirx[SPI_RX_BUFF_SIZE*2];
+extern volatile uint8_t* spirx_ptr;
+extern volatile uint8_t spirx_flag;
 
 //COMPORT
 void CP_Init(uint32_t brr);
@@ -17,3 +23,6 @@ void nucleo_printf(char *ptr);
 void LED_ON();
 void LED_OFF();
 void LED_Init();
+//SPI
+void nucleo_spi_init();
+void DMA1_Stream3_IRQHandler();

@@ -69,7 +69,7 @@ void USART_Init(USART_t* usart){
 		NVIC_EnableIRQ(USART_IRQn);
 	
 	/* Enable */
-	usart->regs->CR1 = USART_CR1_TE | USART_CR1_RE;
+	usart->regs->CR1 = (usart->rxe << USART_CR1_RE_Pos) | (usart->txe << USART_CR1_TE_Pos);
 	usart->regs->CR1 |= USART_CR1_UE;
 
 }
