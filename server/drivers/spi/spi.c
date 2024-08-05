@@ -38,7 +38,6 @@ void SPI_Init(SPI_t* spi){
 			}
 	}
 	
-	
 	/* Config */
 	spi->regs->CR1 = SPI_CR1_SSM | SPI_CR1_SSI | (spi->br << SPI_CR1_BR_Pos);// 11.25MHz
 	
@@ -52,8 +51,6 @@ void SPI_Init(SPI_t* spi){
 		spi->regs->CR2 |= SPI_CR2_TXDMAEN;
 	if(spi->dmaRxE)
 		spi->regs->CR2 |= SPI_CR2_RXDMAEN;
-
-	
 	
 	///*Enable*/
 	SPI1->CR1 |= SPI_CR1_SPE; 

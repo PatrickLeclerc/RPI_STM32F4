@@ -6,6 +6,17 @@
 volatile uint8_t spirx[SPI_RX_BUFF_SIZE*2] = {};
 volatile uint8_t* spirx_ptr;
 volatile uint8_t spirx_flag;
+
+//TIM
+volatile uint32_t tim2_flag = 0;
+void TIM2_IRQHandler()
+{
+	if(TIM2->SR & TIM_SR_UIF){
+		TIM2->SR &= ~TIM_SR_UIF;
+		tim2_flag = 1;
+	}
+}
+
 //COMPORT
 void CP_Init(uint32_t brr){
 	USART_t usart2 = {

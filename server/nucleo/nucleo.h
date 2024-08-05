@@ -1,5 +1,7 @@
 #include "acsu.h"
 #include "tim.h"
+extern volatile uint32_t tim2_flag;
+
 #include "usart.h"
 #include "gpio.h"
 #include "dma.h"
@@ -11,6 +13,8 @@ extern volatile uint8_t spirx[SPI_RX_BUFF_SIZE*2];
 extern volatile uint8_t* spirx_ptr;
 extern volatile uint8_t spirx_flag;
 
+//TIM
+void TIM2_IRQHandler();
 //COMPORT
 void CP_Init(uint32_t brr);
 //Polling writes

@@ -1,17 +1,15 @@
 #include "nucleo.h"
-volatile uint32_t tim2_flag = 0;
-
 int main(){
 	/* Basic */
 	ACSU_Init(180U);
-	RTC_Init();
-	LED_Init();
 	CP_Init(115200);	
+	LED_Init();
+	RTC_Init();
     nucleo_printf("\033c");
 	nucleo_printf("ACSU     : OK.\r\n");
-	nucleo_printf("RTC      : OK.\r\n");
-	nucleo_printf("LED      : OK.\r\n");
 	nucleo_printf("COMPORT  : OK.\r\n");
+	nucleo_printf("LED      : OK.\r\n");
+	nucleo_printf("RTC      : OK.\r\n");
     /*Peripherals*/
 	//TIM
     TIM_t tim2 = {
@@ -36,19 +34,8 @@ int main(){
 		}	
 		if(spirx_flag){
 			static int i = 0;
-			if(i++&1)
-				LED_ON();
-			else
-				LED_OFF();
+			LED_ON();
 			spirx_flag = 0;
 		}
-	}
-}
-//TIM2
-void TIM2_IRQHandler()
-{
-	if(TIM2->SR & TIM_SR_UIF){
-		TIM2->SR &= ~TIM_SR_UIF;
-		tim2_flag = 1;
 	}
 }
