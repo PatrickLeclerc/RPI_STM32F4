@@ -1,0 +1,7 @@
+server/build/*.bin
+server/build/*.elf
+server/build/*.hex
+server/build/*.map
+server/build/*.lst
+server/build/*.d
+server/build/*.o

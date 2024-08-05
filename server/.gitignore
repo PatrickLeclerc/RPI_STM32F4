@@ -1,7 +1,0 @@
-build/*.bin
-build/*.elf
-build/*.hex
-build/*.map
-build/*.lst
-build/*.d
-build/*.o
